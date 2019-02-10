@@ -1,11 +1,6 @@
 import sqlite3
 import re
 import os
-
-# Need to import Lookup and Transform because they are used in evaluating mapping files
-from lookup import do_lookup, Lookup
-from transform import Transform, find_associations
-
 import traceback
 
 DATABASE_FILENAME = 'C:\Program Files (x86)\Steam\steamapps\common\My Time At Portia\Portia_Data\StreamingAssets\CccData\LocalDb.bytes'
@@ -713,76 +708,91 @@ def main(mappings):
     connection = sqlite3.connect(DATABASE_FILENAME)
     connection.row_factory = dict_factory
 
-    for filepath, mapping in mappings.items():
-        with open(filepath[:-2] + 'txt', 'w', encoding='utf-8') as f:
-            try:
-                if 'association' in mapping:
-                    column = mapping['association']['column']
-                    lookup = None
-                    if isinstance(column, tuple):
-                        column, lookup = column
-                    extracted = find_associations(mapping['name'], column, mapping['association'].get(
-                        'split', ','), mapping['association']['name'], mapping['association'].get('tag_names', {}), connection)
-                    if lookup is not None:
-                        new_extracted = [[]]
-                        for i in extracted:
-                            for key, value in i:
-                                new_extracted[0].append((do_lookup(
-                                    lookup[1], key, lookup[0], lookup[2], lookup[3], connection, {}), value))
-                        extracted = new_extracted
-                elif 'columns' in mapping:
-                    extracted = extract_table(mapping['name'], mapping['columns'], connection)
-                print(mapping['name'])
-                print('\n')
-                for single in extracted:
-                    maxlen = 0
-                    for field, _ in single:
-                        maxlen = max(len(field), maxlen)
-                    multiple_values_in_list = False
-                    for field, value in single:
-                        if '\n' in value:
-                            multiple_values_in_list = True
-                    # Does weird things to name column, disable for now
-                    multiple_values_in_list = False
-                    for field, value in single:
-                        if '\n' in value:
-                            all_values = value.split('\n')
-                            index_length = len(str(len(all_values)))
-                            all_values = ['{0:>{1}}: {2}'.format(i + 1, index_length, all_values[i])
-                                          for i in range(len(all_values))]
-                            value = '\n{0:>{1}}'.format(' ', maxlen + 2).join(all_values)
-                        elif multiple_values_in_list:
-                            value = '1: {}'.format(value)
-                        line = '{0:>{1}}: {2}'.format(field, maxlen, value)
-                        try:
-                            print(line)
-                        except UnicodeEncodeError:
-                            print('{0:>{1}}: {2}'.format(field, maxlen, value.encode('cp437', 'replace').decode('cp437')))
-                        f.write(line + '\n')
-                        f.flush()
-                    f.write('\n')
-                    print('')
-            except Exception:
-                err = 'Failed to evaluate mapping for {} due to the following error:\n\n{}'.format(
-                    filepath, traceback.format_exc())
-                print(err)
-                f.write(err)
+    with open('all.txt', 'w') as f_all:
+        for filepath, mapping in mappings.items():
+            with open(filepath[:-2] + 'txt', 'w', encoding='utf-8') as f:
+                try:
+                    if 'association' in mapping:
+                        column = mapping['association']['column']
+                        lookup = None
+                        if isinstance(column, tuple):
+                            column, lookup = column
+                        extracted = find_associations(mapping['name'], column, mapping['association'].get(
+                            'split', ','), mapping['association']['name'], mapping['association'].get('tag_names', {}), connection)
+                        if lookup is not None:
+                            new_extracted = [[]]
+                            for i in extracted:
+                                for key, value in i:
+                                    new_extracted[0].append((do_lookup(
+                                        lookup[1], key, lookup[0], lookup[2], lookup[3], connection, {}), value))
+                            extracted = new_extracted
+                    elif 'columns' in mapping:
+                        extracted = extract_table(mapping['name'], mapping['columns'], connection)
+                    print(mapping['name'])
+                    print('\n')
+                    for single in extracted:
+                        maxlen = 0
+                        for field, _ in single:
+                            maxlen = max(len(field), maxlen)
+                        multiple_values_in_list = False
+                        for field, value in single:
+                            if '\n' in value:
+                                multiple_values_in_list = True
+                        # Does weird things to name column, disable for now
+                        multiple_values_in_list = False
+                        for field, value in single:
+                            if '\n' in value:
+                                all_values = value.split('\n')
+                                index_length = len(str(len(all_values)))
+                                all_values = ['{0:>{1}}: {2}'.format(i + 1, index_length, all_values[i])
+                                              for i in range(len(all_values))]
+                                value = '\n{0:>{1}}'.format(' ', maxlen + 2).join(all_values)
+                            elif multiple_values_in_list:
+                                value = '1: {}'.format(value)
+                            line = '{0:>{1}}: {2}'.format(field, maxlen, value)
+                            try:
+                                print(line)
+                            except UnicodeEncodeError:
+                                print('{0:>{1}}: {2}'.format(field, maxlen,
+                                                             value.encode('cp437', 'replace').decode('cp437')))
+                            f.write(line + '\n')
+                            f_all.write(line + '\n')
+                            f.flush()
+                            f_all.flush()
+                        f.write('\n')
+                        f_all.write('\n')
+                        print('')
+                except Exception:
+                    err = 'Failed to evaluate mapping for {} due to the following error:\n\n{}'.format(
+                        filepath, traceback.format_exc())
+                    print(err)
+                    f.write(err)
+                    f_all.write(err)
 
 
 if __name__ == '__main__':
+    folder = os.path.join('datasets', 'Player')
+    files = []
+    if len(files) == 0:
+        for root, _, filenames in os.walk(folder):
+            for filename in filenames:
+                if filename.endswith('.py'):
+                    files.append(os.path.join(root, filename))
+    else:
+        for i, filepath in enumerate(files):
+            if not filepath.endswith('.py'):
+                filepath += '.py'
+            files[i] = os.path.join('datasets', filepath)
+    files.sort()
     mappings = {}
-    for root, _, filenames in os.walk('datasets'):
-        for filename in filenames:
-            if not filename.endswith('.py'):
-                continue
-            filepath = os.path.join(root, filename)
-            with open(filepath) as f:
-                try:
-                    mapping = eval(f.read())
-                except Exception:
-                    print('Failed to evaluate file {}:\n{}'.format(filepath, traceback.format_exc()))
-                    exit(1)
-            mappings[filepath] = mapping
+    for filepath in files:
+        with open(filepath) as f:
+            try:
+                mapping = eval(f.read())
+            except Exception:
+                print('Failed to evaluate file {}:\n{}'.format(filepath, traceback.format_exc()))
+                exit(1)
+        mappings[filepath] = mapping
 
     if not os.path.isfile(DATABASE_FILENAME):
         print('Please update DATABASE_FILENAME to point to LocalDb.bytes')
