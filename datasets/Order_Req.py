@@ -1,0 +1,11 @@
+{'name': 'Order_Req',
+ 'columns': [('ItemReq', Lookup.PROP, {'quantity_post': '_',
+                                       'label': 'Requested item'}),
+             ('OrderID', None, {'label': 'Order ID'}),
+             ('Gold', None, {'label': 'Gols earned'}),
+             ('Relationship', None, {'label': 'Relationship Points earned'}),
+             ('WorkshopPT', None, {'label': 'Workshop Points earned'}),
+             ('Exp', None, {'label': 'Experience earned'}),
+             ('Level', None, {'label': 'Commission level'}),
+             ('Weight', None, {'label': 'Weight*'}),
+             ('Deadline', None, {'label': 'Commission deadline'})]}

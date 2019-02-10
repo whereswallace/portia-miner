@@ -1,0 +1,10 @@
+{'name': 'Weather',
+ 'columns': [('ID', None, {'label': 'Sunny|Cloudy|RainDay|SnowDay|Overcast|HeavySnowDay'}),
+             ('Week1', None, {'split': ',',
+                              'quantity_post': '_'}),
+             ('Week2', None, {'split': ',',
+                              'quantity_post': '_'}),
+             ('Week3', None, {'split': ',',
+                              'quantity_post': '_'}),
+             ('Week4', None, {'split': ',',
+                              'quantity_post': '_'})]}

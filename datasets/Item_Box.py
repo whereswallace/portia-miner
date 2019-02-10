@@ -1,0 +1,10 @@
+{'name': 'Item_Box',
+ 'columns': [('ID', Lookup.PROP),
+             ('DropID', Lookup.ITEM_DROP_FIXED, {'label': 'Fixed Drop',
+                                                 'ignore_if_equals': ['0']}),
+             ('DropID', Lookup.ITEM_DROP_FIXED_NUMBER, {'label': 'Fixed Drop #',
+                                                        'ignore_if_equals': ['0']}),
+             ('DropID', Lookup.ITEM_DROP_RANDOM, {'label': 'Random Drop',
+                                                  'ignore_if_equals': ['0']}),
+             ('DropID', Lookup.ITEM_DROP_RANDOM_NUMBER, {'label': 'Random Drop #',
+                                                         'ignore_if_equals': ['0']})]}

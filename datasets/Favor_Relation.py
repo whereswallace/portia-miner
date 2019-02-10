@@ -1,0 +1,10 @@
+{'name': 'Favor_Relation',
+ 'columns': [('Favor_Relation_ID', None, {'label': 'Relationship Label ID'}),
+             ('relation_name', Lookup.TRANSLATION, {'label': 'Relationship Label'}),
+             ('type', Transform.RELATION_TYPE, {'label': 'Romanceable?'}),
+             ('canplay', None, {'label': 'Play?'}),
+             ('canexpress', None, {'label': 'Confess?'}),
+             ('canpropose', None, {'label': 'Propose'}),
+             ('askbirthday', Transform.BOOL, {'label': 'Birthday Available?'}),
+             ('attendBirthdayParty', None),
+             ('askstory', Transform.BOOL, {'label': 'Bio Available?'})]}

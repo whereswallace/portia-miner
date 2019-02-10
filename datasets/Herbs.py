@@ -1,0 +1,11 @@
+{'name': 'Herbs',
+ 'columns': [('Drop_Model_Path', None, {'label': 'Item type*'}),
+             ('ID', None, {'label': 'Herb ID'}),
+             ('Drop_Group', Lookup.ITEM_DROP_FIXED, {'label': 'Fixed herbs dropped'}),
+             ('Drop_Group', Lookup.ITEM_DROP_FIXED_NUMBER, {'label': 'Number of fixed herbs dropped'}),
+             ('Drop_Group', Lookup.ITEM_DROP_RANDOM, {'label': 'Random herbs dropped'}),
+             ('Drop_Group', Lookup.ITEM_DROP_RANDOM_NUMBER, {'label': 'Number of random herbs dropped'}),
+             ('Scene', None, {'label': 'Area found'}),
+             ('Season', None, {'label': 'Season found'}),
+             ('DayorNight', None, {'label': 'Time found'}),
+             ('Weather', None, {'label': 'Weather found'})]}

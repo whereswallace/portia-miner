@@ -1,0 +1,11 @@
+{'name': 'Food_Menu',
+ 'columns': [('food_type_name', None, {'label': 'Restaurant course'}),
+             ('food_name', Lookup.TRANSLATION, {'label': 'Food name'}),
+             ('Food_Season', None, {'label': 'Season available'}),
+             ('Food_Sale', None, {'label': 'Market price'}),
+             ('food_score', None, {'label': 'Mood Points on dates if neutral*'}),
+             ('Like_Coefficient', None, {'label': 'Mood Points on dates if liked*'}),
+             ('DisLike_Coefficient', None, {'label': 'Mood points on dates if disliked*'}),
+             ('Food_Tag', Lookup.FOOD_DIALOG, {'split': ',',
+                                               'label': 'Food tags'}),
+             ('Icon', None, {'label': 'Food image name'})]}

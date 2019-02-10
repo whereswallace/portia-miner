@@ -1,0 +1,17 @@
+{'name': 'Item_equipment',
+ 'columns': [('Equipment_Id', Lookup.PROP, {'label': 'Gift tag'}),
+             ('Equipment_Type', None),  # for now
+             ('ATK', None, {'label': 'Attack'}),
+             ('Defense', None),
+             ('Health', None, {'label': 'HP'}),
+             ('CpMax', None, {'label': 'SP'}),
+             ('Crit', None, {'label': 'Critical Chance'}),
+             ('MeleeCriticalAmount', None, {'label': 'Melee Critical Damage*'}),
+             ('RangeCriticalAmount', None, {'label': 'Ranged Critical Damage*'}),
+             ('Move_Speed', None, {'label': 'Movement speed'}),
+             ('AntiCritical', None, {'label': 'Resilience'}),
+             ('Attack_Distance', None, {'label': 'Attack distance*'}),
+             ('Dig_Range', None, {'label': 'Digging range*'}),
+             ('DigIntensity', None, {'label': 'Digging intensity*'}),
+             ('Cp_Cost', None, {'label': 'Stamina cost'}),
+             ('Date_Force', None, {'label': 'Extra Action Points'})]}

@@ -1,0 +1,10 @@
+{'name': 'Date_Event_new',
+ 'columns': [('event_name', Lookup.TRANSLATION, {'label': 'Date Activity'}),
+             ('is_date', Transform.BOOL, {'label': 'Is Date?'}),
+             ('RemoveWeather', None, {'label': 'Weather available'}),
+             ('RemoveInfo', None),
+             ('project_id', Lookup.DATE_PROJECT, {'label': 'Location',
+                                                  'split': ","}),
+             ('MapIcon_Point', None, {'label': 'Map coordinates'}),
+             ('time', None, {'split': ",",
+                             'label': 'Hours'})]}
