@@ -4,5 +4,5 @@
              ('Attachment', Lookup.PROP, {'split': ':',
                                           'label': 'Attached item'}),
              ('missionid', None, {'label': 'Related mission'}),
-             ('MissionAutoReceive', None, {'label': 'Mission attached'}),
-             ('appear', None, {'label': 'Envelope type'})]}
+             ('MissionAutoReceive', None, {'label': 'Mission that starts upon opening mail'}),
+             ('appear', None, {'label': 'Envelope image type'})]}

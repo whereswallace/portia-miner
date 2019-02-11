@@ -1,3 +1,3 @@
 {'name': 'Credits',
- 'columns': [('IdentityEN', None, {'label': 'Character'}),
-             ('NameEN', None, {'label': 'Voice Actor'})]}
+ 'columns': [('IdentityEN', None, {'label': 'Role in the game'}),
+             ('NameEN', None, {'label': 'Name of voice actor, employee, or backer'})]}

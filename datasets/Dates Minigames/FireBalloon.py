@@ -1,8 +1,8 @@
 {'name': 'FireBalloon',
- 'columns': [('pathname', Lookup.TRANSLATION, {'label': 'Ride route'}),
-             ('needtime', None, {'label': 'Trip length'}),
-             ('Cost', None, {'label': 'Gol cost'}),
-             ('SeasonLimit', None, {'label': 'Seasons available'}),
-             ('RemoveWeather', None, {'label': 'Weather available'}),
-             ('addmood', None, {'label': 'Mood Points earned'}),
-             ('addcp', None, {'label': 'SP restored'})]}
+ 'columns': [('pathname', Lookup.TRANSLATION, {'label': 'Balloon ride route'}),
+             ('needtime', None, {'label': 'Length of route'}),
+             ('Cost', None, {'label': 'Gol cost to ride'}),
+             ('RemoveWeather', None, {'label': 'Remove route when weather is...'}),
+             ('addmood', None, {'label': 'Mood Points earned from route'}),
+             ('addcp', None, {'label': 'SP restored during ride'}),
+             ('SeasonLimit', None, {'label': '**Season_Limit**'})]}

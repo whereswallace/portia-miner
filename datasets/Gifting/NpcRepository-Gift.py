@@ -1,0 +1,12 @@
+{'name': 'NpcRepository',
+         'columns': [('Name', Lookup.TRANSLATION, {'label': 'NPC name'}),
+                     ('giftid', Transform.GIFT_ID_EXCELLENT, {'label': 'Love'}),
+                     ('giftid', Transform.GIFT_ID_LIKE, {'label': 'Like'}),
+                     ('giftid', Transform.GIFT_ID_DISLIKE, {'label': 'Dislike'}),
+                     ('giftid', Transform.GIFT_ID_HATE, {'label': 'Hate'}),
+                     ('giftid', Transform.GIFT_ID_CONFESSION, {'label': 'Confess'}),
+                     ('giftid', Transform.GIFT_ID_PROPOSE, {'label': 'Propose'}),
+                     ('giftid', Transform.GIFT_ID_REFUSE, {'label': 'Refuse'}),
+                     ('giftid', Transform.GIFT_ID_BREAK_UP, {'label': 'Break Up'}),
+                     ('giftid', Transform.GIFT_ID_DIVORCE, {'label': 'Divorce'}),
+                     ('giftid', Transform.GIFT_ID_JEALOUS, {'label': 'Jealous'})]}

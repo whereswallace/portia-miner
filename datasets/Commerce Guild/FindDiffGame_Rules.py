@@ -3,4 +3,4 @@
              ('diffItemId', Lookup.FIND_DIFF_GAME_ITEMS, {'split': ',',
                                                           'label': 'Items can inspect'}),
              ('rewards', Transform.REWARDS, {'split': ';',
-                                             'label': 'Rewards*'})]}
+                                             'label': 'Mailed rewards})]}

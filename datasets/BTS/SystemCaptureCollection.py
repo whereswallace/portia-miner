@@ -1,2 +1,3 @@
 {'name': 'SystemCaptureCollection',
- 'columns': [('describe', Lookup.TRANSLATION, {'label': 'Photo collection caption'})]}
+ 'columns': [('tag', None, {'label': 'Photo collection subject'}),
+             ('describe', Lookup.TRANSLATION, {'label': 'Photo caption'})]}
