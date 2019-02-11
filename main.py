@@ -312,7 +312,7 @@ class Lookup(object):
     ANIMAL_FARM_HOUSE = ('<str>type', 'AnimalFarm_House', 'ItemId', PROP)
     FAVOR_RELATION = ('<str>Favor_Relation_ID', 'Favor_Relation', 'Relation_Name', TRANSLATION)
     COOK_TAG_NAME = ('<str>Tag', 'Cook_TagName', 'Name', TRANSLATION)
-    STORE_ID = ('<str>Store_Id', 'Store_4_0', 'name_id', TRANSLATION)
+    STORE_ID = ('<str>Store_Id', 'Store_4_0', 'Name_Id', TRANSLATION)
     STORE_PRODUCT = ('<str>product_id', 'Store_product', 'item_id', PROP)
     ACTOR_TYPE = ('<str>ID', 'Actor', 'Name', TRANSLATION)
     DUNGEON_CHEST_FIXED = ('<str>ID', 'Dungeon_Chest', 'Drop_Group', ITEM_DROP_FIXED)
@@ -383,8 +383,9 @@ class Lookup(object):
     RANDOM_HERBS_ITEM_DROP_FIXED_NUMBER = ('<str>ID', 'random_herbs', 'Drop_Group', ITEM_DROP_FIXED_NUMBER)
     RANDOM_HERBS_ITEM_DROP_RANDOM = ('<str>ID', 'random_herbs', 'Drop_Group', ITEM_DROP_RANDOM)
     RANDOM_HERBS_ITEM_DROP_RANDOM_NUMBER = ('<str>ID', 'random_herbs', 'Drop_Group', ITEM_DROP_RANDOM_NUMBER)
-    KINSHIP_DATA = ('<str>kinshipId', 'kinship_data', 'nameId', TRANSLATION)
     EMOTION_DATA = ('<str>emotionId', 'emotion_data', 'nameId', TRANSLATION)
+    SLOT_RATE_TYPE = ('<str>Type', 'Slot_Rate', 'Index_List', None)
+    SLOT_RATE_RATE = ('<str>Type', 'Slot_Rate', 'Rate', None)
 
 
 class Transform(object):
@@ -708,7 +709,7 @@ def main(mappings):
     connection = sqlite3.connect(DATABASE_FILENAME)
     connection.row_factory = dict_factory
 
-    with open('all.txt', 'w') as f_all:
+    with open('all.txt', 'w', encoding='utf-8') as f_all:
         for filepath, mapping in mappings.items():
             with open(filepath[:-2] + 'txt', 'w', encoding='utf-8') as f:
                 try:
@@ -771,7 +772,7 @@ def main(mappings):
 
 
 if __name__ == '__main__':
-    folder = os.path.join('datasets', 'Player')
+    folder = os.path.join('datasets')
     files = []
     if len(files) == 0:
         for root, _, filenames in os.walk(folder):
@@ -782,7 +783,7 @@ if __name__ == '__main__':
         for i, filepath in enumerate(files):
             if not filepath.endswith('.py'):
                 filepath += '.py'
-            files[i] = os.path.join('datasets', filepath)
+            files[i] = os.path.join(folder, filepath)
     files.sort()
     mappings = {}
     for filepath in files:
