@@ -36,20 +36,20 @@ Local Disk (C:) > Program Files (x86) > Steam > steamapps > common > My Time at 
 ### How to run only the parts of the script that you want
 Locate the following lines of code in **main.py**, near the end of the script:
 ```
-"if __name__ == '__main__':
+if __name__ == '__main__':
     folder = os.path.join('datasets')
     files = []
 ```
 * If you leave the code above unchanged, the script will run on every folder and every file contained within the datasets folder. To narrow the scope of the script, you can specify a subfolder within the datasets folder, which will run the script on that subfolder only, or you can specify a file within the datasets folder, which will run the script on that file only.
 * To specify a certain subfolder within "datasets", you can change the code like so (in this example, the subfolder is "Fish"):
 ```
-"if __name__ == '__main__':
+if __name__ == '__main__':
     folder = os.path.join('datasets', 'Fish')
     files = []
 ```
 - To specify a certain file within "datasets", you can change the code like so (in this example, the file is "Fishlist", which is located in the subfolder "Fish"):
 ```
-"if __name__ == '__main__':
+if __name__ == '__main__':
     folder = os.path.join('datasets', 'Fish')
     files = ['FishList']
 ```
