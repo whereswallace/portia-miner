@@ -1,0 +1,11 @@
+{'name': 'HomePlugin',
+ 'columns': [('Name', Lookup.TRANSLATION, {'label': 'Special building name'}),
+             ('Desc', Lookup.TRANSLATION, {'label': 'Description'}),
+             ('Gold_Need', None, {'label': 'Gol cost'}),
+             ('Item_Need', Lookup.PROP, {'split': ';',
+                                         'quantity_post': ',',
+                                         'label': 'Material cost'}),
+             ('Unlock_Level', None, {'label': '**Unlock_Level**'}),
+             ('Item_Recycle', Lookup.PROP, {'split': ';',
+                                            'quantity_post': ',',
+                                            'label': '**Item_Recycle**'})]}

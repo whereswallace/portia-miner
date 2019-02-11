@@ -1,0 +1,11 @@
+{'name': 'Fish',
+ 'columns': [('ID', None, {'label': 'Fishing spot'}),
+             ('Rub_Drop', Lookup.PROP, {'split': ';',
+                                        'quantity_post': ',',
+                                        'label': 'Rubbish dropped'}),
+             ('Fish_Drop', Lookup.PROP, {'split': ';',
+                                         'quantity_post': ',',
+                                         'label': 'Fish available on normal days'}),
+             ('Match_Fish_Drop', Lookup.PROP, {'split': ';',
+                                               'quantity_post': ',',
+                                               'label': 'Fish available during Fishing Day'})]}

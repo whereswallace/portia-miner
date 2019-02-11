@@ -1,0 +1,11 @@
+{'name': 'Herbs',
+ 'columns': [('Drop_Model_Path', None, {'label': 'Name of world feature that can be gathered'}),
+             ('ID', None, {'label': 'Feature ID'}),
+             ('Scene', None, {'label': 'Area where world feature can be found'}),
+             ('Season', None, {'label': 'Seasons when feature can be found'}),
+             ('DayorNight', None, {'label': 'Time of day when feature can be found'}),
+             ('Weather', None, {'label': 'Weather when feature can be found found'}),
+             ('Drop_Group', Lookup.ITEM_DROP_FIXED, {'label': 'Fixed items dropped when gathering'}),
+             ('Drop_Group', Lookup.ITEM_DROP_FIXED_NUMBER, {'label': 'Number of fixed items dropped'}),
+             ('Drop_Group', Lookup.ITEM_DROP_RANDOM, {'label': 'Random items dropped when gathering'}),
+             ('Drop_Group', Lookup.ITEM_DROP_RANDOM_NUMBER, {'label': 'Number of random items dropped'})]}

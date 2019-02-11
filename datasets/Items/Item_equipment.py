@@ -1,0 +1,17 @@
+{'name': 'Item_equipment',
+ 'columns': [('Equipment_Type', None),  # for now
+             ('Equipment_Id', Lookup.PROP, {'label': 'Name of equipment item'}),
+             ('Cp_Cost', None, {'label': 'Stamina cost to use'}),
+             ('ATK', None, {'label': 'Attack'}),
+             ('Defense', None),
+             ('Health', None, {'label': 'HP'}),
+             ('CpMax', None, {'label': 'SP'}),
+             ('Crit', None, {'label': 'Critical Chance'}),
+             ('MeleeCriticalAmount', None, {'label': 'Melee Critical Damage'}),
+             ('RangeCriticalAmount', None, {'label': 'Ranged Critical Damage'}),
+             ('Move_Speed', None, {'label': 'Movement speed'}),
+             ('AntiCritical', None, {'label': 'Resilience'}),
+             ('Date_Force', None, {'label': 'Extra action points while equipped'}),
+             ('Attack_Distance', None, {'label': '**Attack_Distance**'}),
+             ('Dig_Range', None, {'label': '**Dig_Range**'}),
+             ('DigIntensity', None, {'label': '**Dig_Intensity**'})]}

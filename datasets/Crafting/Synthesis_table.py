@@ -1,0 +1,18 @@
+{'name': 'Synthesis_table',
+ 'columns': [('Item_Id', Lookup.PROP_ITEM_TYPE, {'label': 'Item type'}),
+             ('Plug_In_Type', None, {'label': 'Under which crafting tab?'}),
+             ('Name', Lookup.TRANSLATION, {'label': 'Name of item to be crafted'}),
+             ('Item_Id', Lookup.PROP, {'label': 'Alt name'}),
+             ('Furniture_Id', Lookup.PROP, {'label': 'Alt furniture name'}),
+             ('NotAutomable', Transform.BOOL, {'label': 'CanNOT be automated in factory?'}),
+             ('Unlock_Level', None, {'label': 'Required crafting station level (0,1,2,...)'}),
+             ('Time', None, {'label': 'Crafting time'}),
+             ('Data_one_id', Lookup.PROP, {'label': '1st ingredient'}),
+             ('Data_one_number', None, {'label': '1st ingredient amount'}),
+             ('Data_two_id', Lookup.PROP, {'label': '2nd ingredient'}),
+             ('Data_two_number', None, {'label': '2nd ingredient amount'}),
+             ('Data_three_id', Lookup.PROP, {'label': '3rd ingredient'}),
+             ('Data_three_number', None, {'label': '3rd ingredient amount'}),
+             ('Exp', None, {'label': 'Experience earned'}),
+             ('Additional_item_probability_and_number', None, {
+                 'label': '**Additional_item_probability_and_number**'})]}

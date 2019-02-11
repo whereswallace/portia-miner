@@ -1,0 +1,10 @@
+{'name': 'Item_Box',
+ 'columns': [('ID', Lookup.PROP, {'label': 'Name of non-traditional storage box'}),
+             ('DropID', Lookup.ITEM_DROP_FIXED, {'label': 'Items dropped by box (fixed)',
+                                                 'ignore_if_equals': ['0']}),
+             ('DropID', Lookup.ITEM_DROP_FIXED_NUMBER, {'label': 'Number of items dropped by box (fixed)',
+                                                        'ignore_if_equals': ['0']}),
+             ('DropID', Lookup.ITEM_DROP_RANDOM, {'label': 'Items dropped by box (random)',
+                                                  'ignore_if_equals': ['0']}),
+             ('DropID', Lookup.ITEM_DROP_RANDOM_NUMBER, {'label': 'Number of items dropped by box (random)',
+                                                         'ignore_if_equals': ['0']})]}

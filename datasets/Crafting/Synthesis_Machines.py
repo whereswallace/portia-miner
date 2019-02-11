@@ -1,0 +1,10 @@
+{'name': 'Synthesis_Machines',
+ 'columns': [('Name', Lookup.TRANSLATION, {'label': 'Name of crafting station'}),
+             ('Level', None, {'label': 'Level of station in relation to similar stations (0,1,2,...)'}),
+             ('fuel_id', Lookup.PROP, {'label': 'Fuel used to power it'}),
+             ('fuel_max', None, {'label': '# of units of fuel that can be added to it'}),
+             ('minutes', None, {'label': 'How long fuel lasts when fully fueled'}),
+             ('itemcount_max', None, {'label': 'Maximum items queued at once'}),
+             ('FactoryCapacity', None, {'label': '**Factory_Capacity**'}),
+             ('Weather_Coef', None, {'label': '**Effect of weather on production**'}),
+             ('Season_Coef', None, {'label': '**Effect of season on production**'})]}

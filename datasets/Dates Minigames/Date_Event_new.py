@@ -1,0 +1,10 @@
+{'name': 'Date_Event_new',
+ 'columns': [('event_name', Lookup.TRANSLATION, {'label': 'Play/Date activity'}),
+             ('is_date', Transform.BOOL, {'label': 'Is a romantic date activity?'}),
+             ('RemoveWeather', None, {'label': 'Weather that removes this activity'}),
+             ('RemoveInfo', None, {'label': 'Other condition that removes this activity'}),
+             ('project_id', Lookup.DATE_PROJECT, {'label': 'Eligible meeting places',
+                                                  'split': ","}),
+             ('MapIcon_Point', None, {'label': 'Map coordinates of activity'}),
+             ('time', None, {'split': ",",
+                             'label': 'Hours activity is available'})]}

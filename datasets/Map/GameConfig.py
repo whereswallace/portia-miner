@@ -1,0 +1,11 @@
+{'name': 'GameConfig',
+ 'columns': [('scenenameid', Lookup.TRANSLATION, {'label': 'Location name'}),
+             ('OpenTime', None, {'label': 'Open Hours'}),
+             ('UnitySceneName', None, {'label': '**UnitySceneName**'}),
+             ('Radius', None, {'label': '**Radius**'}),
+             ('PosinWorldMap', None, {'label': '**PosinWorldMap**'}),
+             ('PortalinPos', None, {'label': '**PortalinPos**'}),
+             ('PortalinRot', None, {'label': '**PortalinRot**'}),
+             ('PortalOutPos', None, {'label': '**PortalOutPos**'}),
+             ('PortalOutRot', None, {'label': '**PortalOutRot**'}),
+             ('MapCenter', None, {'label': '**MapCenter**'})]}
