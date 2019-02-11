@@ -1,8 +1,8 @@
 {'name': 'ExchangeReq',
-         'columns': [('npcId', Lookup.REPOSITORY, {'label': 'NPC'}),
+         'columns': [('npcId', Lookup.REPOSITORY, {'label': 'Name of NPC'}),
                      ('supplyPool', Lookup.PROP, {'split': ',',
-                                                  'label': 'Offers'}),
+                                                  'label': 'Relic pieces they offer on the exchange'}),
                      ('reqPool', Lookup.PROP, {'split': ',',
-                                               'label': 'Requests'}),
+                                               'label': 'Relic pieces they request on the exchange'}),
                      ('exhibitPool', Lookup.PROP, {'split': ',',
-                                                   'label': 'Favorite donations'})]}
+                                                   'label': 'Favorite exhibits'})]}

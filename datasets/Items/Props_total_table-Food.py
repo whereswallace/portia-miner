@@ -1,0 +1,11 @@
+{'name': 'Props_total_table',
+ 'columns': [('Props_Id', Lookup.PROP, {'label': 'Item'}),
+             ('Props_Id', Lookup.ITEM_FOOD_HP_VALUE, {'label': 'HP Restored'}),
+             ('Props_Id', Lookup.ITEM_FOOD_COMFORT_VALUE, {'label': 'Stamina Restored'}),
+             ('Props_Id', Lookup.ITEM_FOOD_ADD_HP_MAX, {'label': 'HP Max +'}),
+             ('Props_Id', Lookup.ITEM_FOOD_ADD_ATTACK, {'label': 'Attack +'}),
+             ('Props_Id', Lookup.ITEM_FOOD_ADD_DEFENCE, {'label': 'Defense +'}),
+             ('Props_Id', Lookup.ITEM_FOOD_ADD_CRIT, {'label': 'Critical Chance +'}),
+             ('Props_Id', Lookup.ITEM_FOOD_ADD_ANTICRIT, {'label': 'Resilience +'}),
+             ('Props_Id', Lookup.ITEM_FOOD_BUFF_ID, {'label': 'Adds Other Buff?'}),
+             ('Props_Id', Lookup.ITEM_FOOD_REMOVE_BUFF_ID, {'label': 'Removes Other Buff?'})]}

@@ -16,5 +16,5 @@
                                  'ignore_if_equals': ['0']}),
              ('Add_AntiCrit', None, {'label': 'Resilience +',
                                      'ignore_if_equals': ['0']}),
-             ('Buff_Id', None, {'label': 'Adds Other Buff?'}),  # need to define these!
-             ('Remove_Buff_Id', None, {'label': 'Removes Other Buff?'})]}
+             ('Buff_Id', None, {'label': '**Buff_ID**'}),  # need to define these!
+             ('Remove_Buff_Id', None, {'label': '**Remove_Buff_Id**'})]}

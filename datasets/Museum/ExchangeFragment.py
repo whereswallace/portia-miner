@@ -1,5 +1,4 @@
 {'name': 'ExchangeFragment',
  'columns': [('itemId', Lookup.PROP, {'label': 'Requested relic piece'}),
-             ('value', None, {'label': 'Value*'}),
-             ('existDays', None, {'label': 'Days posted'}),
-             ('favorReward', None, {'label': 'RP reward'})]}
+             ('existDays', None, {'label': 'Days posted on the Exchange'}),
+             ('favorReward', None, {'label': 'Relationship Point reward for trade'})]}

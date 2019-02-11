@@ -1,3 +1,5 @@
 {'name': 'Favor_Influence',
  'columns': [('npc_id', Lookup.REPOSITORY, {'label': 'Name'}),
-             ('benefit', None, {'label': 'Perks'})]}
+             ('benefit', Lookup.FAVOR_RELATION, {'split': ";",
+                                                 'quantity_post': '=',
+                                                 'label': 'Perks'})]}

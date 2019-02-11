@@ -1,5 +1,5 @@
 {'name': 'Factory_TransmissionLevel',
- 'columns': [('Level', None, {'label': 'Level of transmission efficiency'}),
-             ('Speed', None, {'label': 'Speed of factory transmission'}),
+ 'columns': [('Level', None, {'label': 'Level of factory transmission'}),
+             ('Speed', None, {'label': 'Speed'}),
              ('Cost', Lookup.PROP, {'quantity_post': ',',
                                     'label': 'Upgrade cost'})]}

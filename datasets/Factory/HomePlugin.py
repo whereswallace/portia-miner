@@ -1,11 +1,11 @@
 {'name': 'HomePlugin',
  'columns': [('Name', Lookup.TRANSLATION, {'label': 'Special building name'}),
              ('Desc', Lookup.TRANSLATION, {'label': 'Description'}),
-             ('Unlock_Level', None, {'label': 'House level required*'}),
+             ('Gold_Need', None, {'label': 'Gol cost'}),
              ('Item_Need', Lookup.PROP, {'split': ';',
                                          'quantity_post': ',',
-                                         'label': 'Items required'}),
+                                         'label': 'Material cost'}),
+             ('Unlock_Level', None, {'label': '**Unlock_Level**'}),
              ('Item_Recycle', Lookup.PROP, {'split': ';',
                                             'quantity_post': ',',
-                                            'label': 'Recycled products*'}),
-             ('Gold_Need', None, {'label': 'Gol cost'})]}
+                                            'label': '**Item_Recycle**'})]}

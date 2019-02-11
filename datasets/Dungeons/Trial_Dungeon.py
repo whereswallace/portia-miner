@@ -1,8 +1,8 @@
 {'name': 'Trial_Dungeon',
  'columns': [('Description', Lookup.TRANSLATION, {'label': 'Ruin name'}),
-             ('ID', None, {'label': 'Level'}),
-             ('Spend_Time', None, {'label': 'Time required to complete level'}),
-             ('Grade', None, {'label': 'Recommended player level'}),
+             ('ID', None, {'label': 'Which level of the ruin'}),
+             ('Spend_Time', None, {'label': 'Time that will pass while inside'}),
+             ('Grade', None, {'label': 'Recommended player level (range)'}),
              ('Little_MonsterID', Lookup.DUNGEON_MONSTER, {'split': ';',
                                                            'quantity_post': ',',
                                                            'label': 'Common enemies'}),
@@ -26,5 +26,5 @@
                                             'label': 'Reward for first time through'}),
              ('Reward', Lookup.PROP, {'split': ',',
                                       'quantity_post': '_',
-                                      'label': 'Reward after first time'}),
-             ('Life', None)]}
+                                      'label': 'Reward for subsequent times through'}),
+             ('Life', None, {'label': 'Number of allowed attempts'})]}
