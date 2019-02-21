@@ -3,5 +3,6 @@
              ('Material', [Lookup.PROP, Lookup.STORE_PRODUCT, Lookup.COOK_TAG_NAME], {'quantity_post': '_',
                                                                                       'split': ';',
                                                                                       'label': 'Ingredients'}),
-             ('Weight', None, {'label': '**Weight**'}),
-             ('Quality', None, {'label': '**Quality**'})]}
+             ('Quality', Lookup.COOK_BOOK_QUALITY_COST, {'label': '**Quality>Cost**'}),
+             ('Quality', Lookup.COOK_BOOK_QUALITY_WEIGHT, {'label': '**Quality>Weight**'}),
+             ('Weight', None, {'label': '**Weight**'})]}
