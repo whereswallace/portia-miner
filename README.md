@@ -62,3 +62,11 @@ if __name__ == '__main__':
 * The database tends to be vague and requires interpretation, and we are still trying to understand certain areas of the database.
 * You may notice that certain data labels in the script are marked with asterisks (** Example **). The asterisks simply point out that the owner of the script isn't 100% sure yet what the data attached to the label refers to, but it seems important enough that it should be included in the script anyway.
 * The very last subfolder located in "datasets" is called "ztesting". This folder contains parts of the script that are broken, that may not be relevant, or that still need work before they can be useful. When they are ready to go, they will be moved to a non-testing subfolder. It is recommended that you disregard them until they are moved out of the testing folder.
+
+## Tables currently not mined by the script
+The following tables from the database are not currently being mined as a part of this script.
+
+* **Useful (will be added in the future)**: Creation_Book, Draw_Group, Farm_NormalItem, Item_Bed, Item_VideoTape
+* *Undetermined (may be useful but we aren't sure)*: ActionInterrupt, AI_Replacement, AircraftBuff, Aircraft_Component, BuffTags, Conversation_list_no, Date_Group_new, DefaultAbility, Effect, Exp_Gold, Extra_attributes, Faction, Farm_Machine, Feature, Fly_Monster, ItemInActorCloneBlacklist
+* ~~*Not Useful Yet*~~: Actor_drop, BalloonGame, Battle_Icon, Factory_Level, Festival_HotPot, Firework
+* ~~Not Useful~~: Area_Effect, Audio, Change_Lamp, Conversation_paragraph, DLC, Favor_Grade_Change, Fish_DropAttribute, GroundTypeData, Initialization Item, Item_book, Item_material
