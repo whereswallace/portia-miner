@@ -4,4 +4,5 @@
              ('Number', None, {'label': 'Row position (starts at 0)'}),
              ('Name', Lookup.TRANSLATION, {'label': 'Skill name'}),
              ('Description', Lookup.TRANSLATION),
-             ('Upper_Limit', None, {'label': 'Max points you can apply'})]}
+             ('Upper_Limit', None, {'label': 'Max points you can apply'}),
+             ('Para_List', None, {'label': 'Additional description'})]}

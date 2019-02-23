@@ -2,6 +2,9 @@ import sqlite3
 import re
 import os
 import traceback
+import json
+import sys
+import hashlib
 
 DATABASE_FILENAME = 'C:\Program Files (x86)\Steam\steamapps\common\My Time At Portia\Portia_Data\StreamingAssets\CccData\LocalDb.bytes'
 
@@ -11,6 +14,52 @@ CACHED_FOOD_MENU = None
 CACHED_DATE_DIALOG = None
 CACHED_GIFT_TAGS = None
 CACHED_GIFT_TAGS_NOTRAN = None
+CACHED_RECYCLE_TAGS = None
+
+CACHED_QUERIES = {}
+
+
+def md5_hash(filename):
+    hash_md5 = hashlib.md5()
+    with open(filename, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+
+def load_cache(current_hash):
+    global CACHED_QUERIES
+    try:
+        if os.path.isfile('cached_queries.json'):
+            with open('cached_queries.json') as f:
+                CACHED_QUERIES = json.load(f)
+            previous_hash = CACHED_QUERIES['hash']
+            if current_hash != previous_hash:
+                print('LOCALDB CHANGED, DELETING CACHE. THIS NEXT RUN WILL BE SLOW BECAUSE THE CACHE NEEDS TO BE REPOPULATED.')
+                CACHED_QUERIES = {}
+    except Exception:
+        print('Failed to load cache file, creating new cache. Error:\n{}'.format(traceback.format_exc()))
+        CACHED_QUERIES = {}
+
+
+def write_cache(current_hash):
+    print('Saving query cache, DO NOT EXIT')
+    global CACHED_QUERIES
+    CACHED_QUERIES['hash'] = current_hash
+    with open('cached_queries.json', 'w') as f:
+        json.dump(CACHED_QUERIES, f)
+    print('Finished saving query cache')
+
+
+def do_query(query, connection):
+    global CACHED_QUERIES
+    if query not in CACHED_QUERIES:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        CACHED_QUERIES[query] = []
+        for result in cursor:
+            CACHED_QUERIES[query].append(result)
+    return CACHED_QUERIES[query]
 
 
 def props_gift_lookup(gift_tagid, connection, gift_id, like_type=None):
@@ -19,19 +68,15 @@ def props_gift_lookup(gift_tagid, connection, gift_id, like_type=None):
 
     if like_type is not None:
         query = 'SELECT Favor_{} from Gift where Gift_ID="{}"'.format(like_type, gift_id)
-        cursor = connection.cursor()
-        cursor.execute(query)
-        results = []
-        for result in cursor:
-            results.append(result)
-        assert len(set([str(x) for x in results])) == 1
+        results = do_query(query, connection)
+        assert len(results) == 1
 
         if CACHED_GIFT_TAGS_NOTRAN is None:
             CACHED_GIFT_TAGS_NOTRAN = find_associations('Props_total_table', 'Tag_List', ',',
                                                         ('props_name', None), {}, connection, ignore_multipliers=True)
             CACHED_GIFT_TAGS_NOTRAN = {x: y.split('\n') for x, y in CACHED_GIFT_TAGS_NOTRAN[0]}
 
-        base_value, exceptions_str = result['favor_{}'.format(like_type.lower())].split('|')
+        base_value, exceptions_str = results[0]['favor_{}'.format(like_type.lower())].split('|')
         exceptions = {}
         if exceptions_str.strip() != '':
             for exception in exceptions_str.split('$'):
@@ -41,11 +86,7 @@ def props_gift_lookup(gift_tagid, connection, gift_id, like_type=None):
     gift_tagid = gift_tagid.split(';')[0]
 
     if CACHED_PROPS is None:
-        CACHED_PROPS = []
-        cursor = connection.cursor()
-        cursor.execute('SELECT props_name, gift_tagid FROM props_total_table')
-        for result in cursor:
-            CACHED_PROPS.append(result)
+        CACHED_PROPS = do_query('SELECT props_name, gift_tagid FROM props_total_table', connection)
     all_gifts = []
     for result in CACHED_PROPS:
         if str(gift_tagid) in result['gift_tagid'].split(','):
@@ -74,11 +115,8 @@ def find_associations(table, column, split_char, name_mapping, tag_names, connec
     column = column.lower()
     name_column = name_mapping[0].lower()
     options = name_mapping[2] if len(name_mapping) > 2 and name_mapping[2] is not None else {}
-    cursor = connection.cursor()
-    cursor.execute('SELECT {}, {} FROM {}'.format(name_column, column, table))
-    all_results = []
-    for result in cursor:
-        all_results.append(result)
+
+    all_results = do_query('SELECT {}, {} FROM {}'.format(name_column, column, table), connection)
 
     all_values = []
     for result in all_results:
@@ -152,12 +190,8 @@ def find_associations(table, column, split_char, name_mapping, tag_names, connec
 def find_npc_from_gift_tagid(gift_tagid, connection):
     global CACHED_GIFTS
     if CACHED_GIFTS is None:
-        CACHED_GIFTS = []
-        cursor = connection.cursor()
-        cursor.execute('SELECT Gift_ID, TagID_Excellent, TagID_Like, TagID_Dislike, TagID_Hate, TagID_Confession, '
-                       'TagID_Propose, TagID_Refuse, TagID_Breakup, TagID_Divorce, TagID_Jealous, TagID_MarriageCall FROM Gift')
-        for result in cursor:
-            CACHED_GIFTS.append(result)
+        CACHED_GIFTS = do_query('SELECT Gift_ID, TagID_Excellent, TagID_Like, TagID_Dislike, TagID_Hate, TagID_Confession, '
+                                'TagID_Propose, TagID_Refuse, TagID_Breakup, TagID_Divorce, TagID_Jealous, TagID_MarriageCall FROM Gift', connection)
     qualifier = None
     for result in CACHED_GIFTS:
         if gift_tagid in result['tagid_excellent'].split(';'):
@@ -204,11 +238,7 @@ def find_npc_from_gift_tagid(gift_tagid, connection):
 def foodtag_lookup(tags, connection):
     global CACHED_FOOD_MENU
     if CACHED_FOOD_MENU is None:
-        CACHED_FOOD_MENU = []
-        cursor = connection.cursor()
-        cursor.execute('SELECT Food_Name, Food_Tag FROM Food_Menu')
-        for result in cursor:
-            CACHED_FOOD_MENU.append(result)
+        CACHED_FOOD_MENU = do_query('SELECT Food_Name, Food_Tag FROM Food_Menu', connection)
     foods = []
     for tag in tags.split(','):
         for result in CACHED_FOOD_MENU:
@@ -355,7 +385,7 @@ class Lookup(object):
     FARM_COMMON_SUITABLE_FLOOR = ('<str>ID', 'Farm_Common', 'SuitableFloor', None)
     FARM_COMMON_AREA = ('<str>ID', 'Farm_Common', 'Area', None)
     FARM_COMMON_UNABLE_FACE_TO_WALL = ('<str>ID', 'Farm_Common', 'UnableFaceToWall', None)
-    STORE_PRODUCT_GENERAL = ('<str>product_id', 'Store_product', 'item_id', )
+    STORE_PRODUCT_GENERAL = ('<str>product_id', 'Store_product', 'item_id', None)
     FOOD_DIALOG = ('<str>FoodTag_ID', 'Food_Dialog', 'FoodTag_Name', TRANSLATION)
     CABINET_TYPE_LIST = ('<str>Type', 'Cabinet_TypeList', 'Name', TRANSLATION)
     ABILITY_TREE_NEW = ('<str>Id', 'Ability_Tree_New', 'Name', TRANSLATION)
@@ -386,6 +416,11 @@ class Lookup(object):
     EMOTION_DATA = ('<str>emotionId', 'emotion_data', 'nameId', TRANSLATION)
     SLOT_RATE_TYPE = ('<str>Type', 'Slot_Rate', 'Index_List', None)
     SLOT_RATE_RATE = ('<str>Type', 'Slot_Rate', 'Rate', None)
+    COOK_BOOK_QUALITY_COST = ('<str>Quality', 'Cook_BookQuality', 'Cost', None)
+    COOK_BOOK_QUALITY_WEIGHT = ('<str>Quality', 'Cook_BookQuality', 'Weight', None)
+    DEE_FLAG_NAME = ('<str>id', 'SceneItemTransformBinding', 'flagName', None)
+    FOOD_TAG_MAXIMUM = ('<str>Food_GroupID', 'Food_Group', 'Food_Maximum', None)
+    FOOD_TAG_MINIMUM = ('<str>Food_GroupID', 'Food_Group', 'Food_Minimum', None)
 
 
 class Transform(object):
@@ -490,12 +525,10 @@ class Transform(object):
     def GIFT_ID(x, connection):
         if str(x) == '1':
             return 'ALL'
-        cursor = connection.cursor()
-        cursor.execute('SELECT Name FROM NPCRepository where GiftID="{}"'.format(x))
-        result = cursor.fetchone()
-        if result is None:
+        results = do_query('SELECT Name FROM NPCRepository where GiftID="{}"'.format(x), connection)
+        if len(results) == 0:
             return '<No NPC with GiftID {}>'.format(x)
-        name = do_lookup('Translation_hint', result['name'], '<str>id', 'English', None, connection, {})
+        name = do_lookup('Translation_hint', results[0]['name'], '<str>id', 'English', None, connection, {})
         if name.strip() == '':
             return '<Empty name, GiftID is {}>'.format(x)
         return name
@@ -580,6 +613,26 @@ class Transform(object):
         return do_lookup('Gift', x, '<str>Gift_ID', 'TagID_jealous', lambda val,
                          connection: props_gift_lookup(val, connection, x) if len(val.strip()) > 0 else 'No Gift_TagID yet', connection, {})
 
+    @staticmethod
+    def PROPS_RECYCLE_TAG(x, connection):
+        global CACHED_RECYCLE_TAGS
+        if CACHED_RECYCLE_TAGS is None:
+            CACHED_RECYCLE_TAGS = {}
+            results = do_query('SELECT props_name, Recycle_Tag FROM props_total_table', connection)
+            for result in results:
+                tags = result['recycle_tag'].split(',')
+                for tag in tags:
+                    if tag not in CACHED_RECYCLE_TAGS:
+                        CACHED_RECYCLE_TAGS[tag] = []
+                    CACHED_RECYCLE_TAGS[tag].append(result['props_name'])
+        if x not in CACHED_RECYCLE_TAGS:
+            return 'Did not find any props with recycle tag {}'.format(x)
+
+        props = []
+        for prop in CACHED_RECYCLE_TAGS[x]:
+            props.append(do_lookup('Translation_hint', prop, '<str>id', 'English', None, connection, {}))
+        return '\n'.join(props)
+
 
 def dict_factory(cursor, row):
     d = {}
@@ -604,16 +657,17 @@ def do_lookup(lookup_table, source_value, lookup_column, result_column, result_c
                 source_value, multiplier = split_values
             else:
                 assert False, 'Invalid quantity options combination: {}'.format(options)
-    cursor = connection.cursor()
     if lookup_column.startswith('<str>'):
         lookup_column = lookup_column[5:]
-        query = 'SELECT {} FROM {} where {}="{}"'.format(result_column, lookup_table, lookup_column, source_value)
-        cursor.execute(query)
+        query = 'SELECT {} FROM {} where {}="{}"'.format(
+            result_column, lookup_table, lookup_column, source_value)
+        results = do_query(query, connection)
     else:
-        query = 'SELECT {} FROM {} where {}={}'.format(result_column, lookup_table, lookup_column, source_value)
-        cursor.execute(query)
+        query = 'SELECT {} FROM {} where {}={}'.format(
+            result_column, lookup_table, lookup_column, source_value)
+        results = do_query(query, connection)
     looked_up_values = []
-    for result in cursor:
+    for result in results:
         looked_up_values.append(result[result_column.lower()])
     if len(looked_up_values) == 0:
         return 'Query {} returned no results'.format(query)
@@ -650,10 +704,8 @@ def do_lookup(lookup_table, source_value, lookup_column, result_column, result_c
 
 def extract_table(name, columns, connection):
     extracted = []
-
-    cursor = connection.cursor()
-    cursor.execute('SELECT {} FROM {}'.format(','.join([x[0] for x in columns]), name))
-    for result in cursor:
+    results = do_query('SELECT {} FROM {}'.format(','.join([x[0] for x in columns]), name), connection)
+    for result in results:
         single_extracted = []
         for i in range(len(columns)):
             options = {}
@@ -798,4 +850,10 @@ if __name__ == '__main__':
     if not os.path.isfile(DATABASE_FILENAME):
         print('Please update DATABASE_FILENAME to point to LocalDb.bytes')
     else:
+        current_hash = md5_hash(DATABASE_FILENAME)
+        load_cache(current_hash)
+        initial_size = sys.getsizeof(CACHED_QUERIES)
         main(mappings)
+        post_run_size = sys.getsizeof(CACHED_QUERIES)
+        if post_run_size - initial_size > 500:
+            write_cache(current_hash)

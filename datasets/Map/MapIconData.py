@@ -1,5 +1,5 @@
 {'name': 'MapIconData',
- 'columns': [('MapIconName', None, {'label': 'Map icon name'}),
+ 'columns': [('Layer', None, {'label': 'Map layer on which icon is located'}),
              ('MapIconID', None, {'label': 'Map icon ID'}),
-             ('SpritePath', None, {'label': 'Name of icon image sprite'}),
-             ('Layer', None, {'label': 'Map layer on which icon is located'})]}
+             ('MapIconName', None, {'label': 'Map icon name'}),
+             ('SpritePath', None, {'label': 'Name of icon image sprite'})]}

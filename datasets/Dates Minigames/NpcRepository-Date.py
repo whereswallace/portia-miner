@@ -4,6 +4,8 @@
                      ('LatestTime_Date_new', None, {'label': 'Leaves the date at what time'}),
                      ('Food_GroupID', Lookup.FOOD_TAG_LIKES, {'label': 'Favorite foods at restaurant'}),
                      ('Food_GroupID', Lookup.FOOD_TAG_DISLIKES, {'label': 'Disliked foods at restaurant'}),
+                     ('Food_GroupID', Lookup.FOOD_TAG_MAXIMUM, {'label': 'Maximum foods wanted?'}),
+                     ('Food_GroupID', Lookup.FOOD_TAG_MINIMUM, {'label': 'Minimum foods wanted?'}),
                      ('Date_DialogID', Lookup.DATE_DIALOG_CONFESS_ACCEPT,
                       {'label': 'Dialogue if accepts confession'}),
                      ('Date_DialogID', Lookup.DATE_DIALOG_CONFESS_REFUSE,
