@@ -66,7 +66,7 @@ if __name__ == '__main__':
 ## Tables currently not mined by the script
 The following tables from the database are not currently being mined as a part of this script.
 
-* **Useful (will be added in the future)**: Creation_Book, Draw_Group, Farm_NormalItem, Item_Bed, Item_VideoTape
-* *Undetermined (may be useful but we aren't sure)*: ActionInterrupt, AI_Replacement, AircraftBuff, Aircraft_Component, BuffTags, Conversation_list_no, Date_Group_new, DefaultAbility, Effect, Exp_Gold, Extra_attributes, Faction, Farm_Machine, Feature, Fly_Monster, ItemInActorCloneBlacklist
-* ~~*Not Useful Yet*~~: Actor_drop, BalloonGame, Battle_Icon, Factory_Level, Festival_HotPot, Firework
-* ~~Not Useful~~: Area_Effect, Audio, Change_Lamp, Conversation_paragraph, DLC, Favor_Grade_Change, Fish_DropAttribute, GroundTypeData, Initialization Item, Item_book, Item_material
+* **Useful (will be added in the future)**: Creation_Book, Draw_Group, Farm_NormalItem, Item_Bed, Item_VideoTape, LoveDate, Order_Deliver_NPC, Order_Deliver_Org, Order_ReqGroup, Part_List, PlayerMission, Res_Point, StageItemList, StagePrice, Store, Store_product, SystemChildrenDialogData, Vehicle_Attribute, Vehicle_Npc, Voice, Wish, WishItem
+* *Undetermined (may be useful but we aren't sure)*: ActionInterrupt, AI_Replacement, AircraftBuff, Aircraft_Component, BuffTags, Conversation_list_no, Date_Group_new, DefaultAbility, Effect, Exp_Gold, Extra_attributes, Faction, Farm_Machine, Feature, Fly_Monster, ItemInActorCloneBlacklist, Material_Sound, NPCAppear_List, NPCAppear_Parts, NPC_Function, PK_Base, Player_Intend, Random_Dungeon, Random_Dungeon_Monster, Store_price_float, Tigher_machine, Wink_bubble
+* ~~*Not Useful Yet*~~: Actor_drop, BalloonGame, Battle_Icon, Factory_Level, Festival_HotPot, Firework, LookStar_Group, Maintask_list, Mend_List, Mission_Publish, Monster, Newsstand_Time, Npc_Group, PathActorCostData, Play_Darts, Play_SlotMachine, SkillCondition, Skill_Stone, Suits, Task_props, random_herbs, templateMission
+* ~~Not Useful~~: Area_Effect, Audio, Change_Lamp, Conversation_paragraph, DLC, Favor_Grade_Change, Fish_DropAttribute, GroundTypeData, Initialization Item, Item_book, Item_material, Lamp, Mend_Upgrade, SystemCaptureAnimData, SystemCaptureAnimMatch, GroundTypeData_old_20181112, InteractItem_old_20180531, blueprint, blueprintPic, dirty_words, trial_copy
