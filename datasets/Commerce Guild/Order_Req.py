@@ -8,4 +8,5 @@
              ('Level', Lookup.GUILD_LEVEL, {'label': 'Commission level'}),
              ('Deadline', None, {'label': 'Commission deadline'}),
              ('OrderID', None, {'label': 'Order ID'}),
+             ('MissionID', None, {'label': 'Associated mission'}),
              ('Weight', None, {'label': '**Weight**'})]}
