@@ -11,5 +11,6 @@
              ('Id', Lookup.PROPS_ID_TO_ANTICRITICAL, {'label': 'Resilience'}),
              ('Id', Lookup.PROPS_ID_TO_DATE_FORCE, {'label': 'Action Points'}),
              ('Type', None, {'label': '1=Head|2=Torso|3=Legs'}),
-             ('CostList', Lookup.PROP, {'quantity_post': '_',
+             ('CostList', Lookup.PROP, {'split': ',',
+                                        'quantity_post': '_',
                                         'label': 'Cost to upgrade'})]}
