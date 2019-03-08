@@ -1,12 +1,17 @@
-{'name': 'PlayerMission',  # player commissions from Civil Corps?
+{'name': 'PlayerMission',
  'columns': [('Type', None),
              ('Level', None),
              ('Title', Lookup.TRANSLATION),
              ('Des', Lookup.TRANSLATION),
              ('Cost', None),
+             ('Rewards', Lookup.PROP, {'label': 'Specific item requested'}),
              ('Count', None),
              ('Time', None),
-             ('Rewards', Lookup.PROP),
+             ('Rewards', Lookup.ITEM_DROP_FIXED, {'label': 'Fixed items will be collected'}),
+             ('Rewards', Lookup.ITEM_DROP_FIXED_NUMBER, {'label': 'Number of fixed items'}),
+             ('Rewards', Lookup.ITEM_DROP_RANDOM, {'label': 'Random items that can be collected'}),
+             ('Rewards', Lookup.ITEM_DROP_RANDOM_NUMBER, {'label': 'Number of random items'}),
              ('DungeonName', None),
              ('DungeonLevel', None),
-             ('Icon', None)]}
+             ('Icon', None),
+             ('FailProbability', None)]}
