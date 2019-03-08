@@ -1,5 +1,5 @@
-{'name': 'SewingList',
- 'columns': [('Id', Lookup.PROP, {'label': 'Clothing name'}),
+{'name': 'SwagingList',
+ 'columns': [('Id', Lookup.PROP, {'label': 'Weapon name'}),
              ('Id', Lookup.PROPS_ID_TO_USER_LEVEL, {'label': 'Armor level'}),
              ('Id', Lookup.PROPS_ID_TO_ATK, {'label': 'Attack'}),
              ('Id', Lookup.PROPS_ID_TO_DEFENSE, {'label': 'Defense'}),
@@ -13,7 +13,7 @@
              ('DisplaySource', Lookup.PROP, {'label': '***DisplaySource***'}),
              ('StatusSource', Lookup.PROP, {'label': '***StatusSource***'}),
              ('Time', None, {'label': '***Time***'}),
-             ('Type', None, {'label': '1=Head|2=Torso|3=Legs'}),
+             ('Type', None, {'label': '1=Sword|2,3,4=Other|5=Ranged'}),
              ('CostList', Lookup.PROP, {'split': ',',
                                         'quantity_post': '_',
                                         'label': 'Cost to upgrade'})]}
