@@ -1,0 +1,10 @@
+{'name': 'Item_drop',
+ 'columns': [('Id', None, {'label': 'Id'}),
+             ('RndDrop_ItemList', Lookup.PROP, {'split': ';',
+                                                'quantity_post': ',',
+                                                'label': 'Random drop item list'}),
+             ('RndDrop_NumRange', None, {'label': 'Random drop amount'}),
+             ('FixDrop_ItemList', Lookup.PROP, {'split': ';',
+                                                'quantity_post': ',',
+                                                'label': 'Fixed drop item list'}),
+             ('FixDrop_MaxNum', None, {'label': 'Fixed drop amount'})]}
