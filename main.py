@@ -562,11 +562,16 @@ class Transform(object):
     @staticmethod
     def REWARDS(x, connection):
         points, mail, drop = x.split(',')
+        return 'Points: {}\n  Mail: {}\n'.format(
+            points,
+            do_lookup('Mail', mail, '<str>id', 'Content', Lookup.TRANSLATION, connection, {}).replace('\n\n', ' ').replace('\n', ' '))
+        """
         return 'Points: {}\nReward: {}\n  Mail: {}\n'.format(
             points,
             do_lookup('Item_drop', drop, '<str>id', 'FixDrop_ItemList', lambda x, connection: ', '.join([do_lookup(
                 'Props_total_table', y.split(',')[0], '<str>Props_Id', 'Props_Name', Lookup.TRANSLATION, connection, {}) for y in x.split(';')]), connection, {}),
             do_lookup('Mail', mail, '<str>id', 'Content', Lookup.TRANSLATION, connection, {}).replace('\n\n', ' ').replace('\n', ' '))
+        """
 
     @staticmethod
     def GIFT_ID_EXCELLENT(x, connection):
@@ -637,6 +642,97 @@ class Transform(object):
         for prop in CACHED_RECYCLE_TAGS[x]:
             props.append(do_lookup('Translation_hint', prop, '<str>id', 'English', None, connection, {}))
         return '\n'.join(props)
+
+    @staticmethod
+    def ORDER_CAN_REQUEST(x, connection):
+        if x == '-1':
+            return 'None'
+        requestables = []
+        groups = x.split('#')
+        for i, group in enumerate(groups):
+            commisions = group.split('|')[0].split(',')
+            for commision in commisions:
+                results = do_query('SELECT req FROM Order_ReqGroup WHERE id="{}"'.format(commision), connection)
+                assert len(results) == 1
+                order_ids = results[0]['req'].split(',')
+                for order_id in order_ids:
+                    results = do_query(
+                        'SELECT * FROM Order_Req WHERE OrderId="{}"'.format(order_id), connection)
+                    assert len(results) == 1
+                    info = results[0]
+                    quantity = info['itemreq'].split('_')[1]
+                    if len(set(quantity.split('-'))) == 1:
+                        quantity = quantity.split('-')[0]
+                    name = do_lookup('Props_total_table', info['itemreq'].split('_')[0], '<str>Props_Id',
+                                     'Props_Name', Lookup.TRANSLATION, connection, {}) + ' (x{})'.format(quantity)
+                    gold = info['gold']
+                    if len(set(gold.split('-'))) == 1:
+                        gold = gold.split('-')[0]
+                    relationship = info['relationship']
+                    if len(set(relationship.split('-'))) == 1:
+                        relationship = relationship.split('-')[0]
+                    workshop_pt = info['workshoppt']
+                    if len(set(workshop_pt.split('-'))) == 1:
+                        workshop_pt = workshop_pt.split('-')[0]
+                    workshop_pt = info['workshoppt']
+                    if len(set(workshop_pt.split('-'))) == 1:
+                        workshop_pt = workshop_pt.split('-')[0]
+                    requestables.append('{}: {}'.format(i + 1, name) +
+                                        '\n     Gold: {}'.format(gold) +
+                                        '\n     Relationship: {}'.format(relationship) +
+                                        '\n     Workshop Pts: {}'.format(workshop_pt) +
+                                        '\n     Exp: {}'.format(info['exp']) +
+                                        '\n     Level: {}'.format(info['level']) +
+                                        '\n     Weight: {}'.format(info['weight']) +
+                                        '\n     Mission ID: {}'.format('None' if info['missionid'] == '-1' else info['missionid']) +
+                                        '\n     Season: {}'.format('None' if info['season'] == '' else info['season']) +
+                                        '\n     Weather: {}'.format('None' if info['weather'] == '' else info['weather']) +
+                                        '\n     Deadline: {} Days'.format(info['deadline']))
+        return '\n'.join(requestables)
+
+    @staticmethod
+    def ORDER_MISSION_DIALOGUE(x, connection):
+        if x == '-1':
+            return 'None'
+        groups = x.split('#')
+        dialogues = []
+        for group in groups:
+            dialogue = do_lookup('Translation_hint', group.split('|')[1], '<str>id', 'English', None, connection, {})
+            dialogues.append(dialogue)
+        return '\n'.join(dialogues)
+
+    @staticmethod
+    def ORDER_CAN_DELIVER_TO(x, connection):
+        groups = x.split('#')
+        npcs = []
+        for group in groups:
+            for subgroup in group.split('|')[2:]:
+                npc_id = subgroup.split('=')[0]
+                npc_name = do_lookup('NPCRepository', npc_id, '<str>Id', 'Name', Lookup.TRANSLATION, connection, {})
+            npcs.append(npc_name)
+        return '\n'.join(npcs)
+
+    @staticmethod
+    def ITEM_DROP_FIXED(x, connection):
+        reward_id = x.split(',')[-1]
+        return do_lookup('Item_drop', reward_id, '<str>id', 'FixDrop_ItemList',
+                         lambda x, connection: '\n'.join([do_lookup('Props_total_table', y.split(',')[0], '<str>Props_Id', 'Props_Name', Lookup.TRANSLATION, connection, {}) for y in x.split(';')]), connection, {})
+
+    @staticmethod
+    def ITEM_DROP_RANDOM(x, connection):
+        reward_id = x.split(',')[-1]
+        return do_lookup('Item_drop', reward_id, '<str>id', 'RndDrop_ItemList',
+                         lambda x, connection: '\n'.join([do_lookup('Props_total_table', y.split(',')[0], '<str>Props_Id', 'Props_Name', Lookup.TRANSLATION, connection, {}) for y in x.split(';')]) if x.split(';')[0].split(',')[0] != '0' else 'None', connection, {})
+
+    @staticmethod
+    def ITEM_DROP_RANDOM_NUMBER(x, connection):
+        reward_id = x.split(',')[-1]
+        return do_lookup('Item_drop', reward_id, '<str>id', 'RndDrop_NumRange', None, connection, {})
+
+    @staticmethod
+    def ITEM_DROP_FIXED_NUMBER(x, connection):
+        reward_id = x.split(',')[-1]
+        return do_lookup('Item_drop', reward_id, '<str>id', 'FixDrop_MaxNum', None, connection, {})
 
 
 def dict_factory(cursor, row):

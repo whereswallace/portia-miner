@@ -1,0 +1,12 @@
+{'name': 'Order_Deliver_Org',
+ 'columns': [('OrgName', Lookup.TRANSLATION, {'label': 'Requesting organization\'s name'}),
+             ('Req_Des_NpcDial', Transform.ORDER_CAN_REQUEST, {'label': 'Can request'}),
+             ('Req_Des_NpcDial', Transform.ORDER_MISSION_DIALOGUE, {'label': 'Mission Dialogue'}),
+             ('Req_Des_NpcDial', Transform.ORDER_CAN_DELIVER_TO, {'label': 'NPCs can deliver to'}),
+             ('Paper', None),
+             ('extraDrop', Lookup.ITEM_DROP_RANDOM, {'split': '|',
+                                                     'quantity_pre': '=',
+                                                     'label': 'Random gratitude items'}),
+             ('extraDrop', Lookup.RANDOM_HERBS_ITEM_DROP_RANDOM_NUMBER, {'split': '|',
+                                                                         'quantity_pre': '=',
+                                                                         'label': 'Number of gratitude items'})]}
