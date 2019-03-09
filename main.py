@@ -562,11 +562,16 @@ class Transform(object):
     @staticmethod
     def REWARDS(x, connection):
         points, mail, drop = x.split(',')
+        return 'Points: {}\n  Mail: {}\n'.format(
+            points,
+            do_lookup('Mail', mail, '<str>id', 'Content', Lookup.TRANSLATION, connection, {}).replace('\n\n', ' ').replace('\n', ' '))
+        """
         return 'Points: {}\nReward: {}\n  Mail: {}\n'.format(
             points,
             do_lookup('Item_drop', drop, '<str>id', 'FixDrop_ItemList', lambda x, connection: ', '.join([do_lookup(
                 'Props_total_table', y.split(',')[0], '<str>Props_Id', 'Props_Name', Lookup.TRANSLATION, connection, {}) for y in x.split(';')]), connection, {}),
             do_lookup('Mail', mail, '<str>id', 'Content', Lookup.TRANSLATION, connection, {}).replace('\n\n', ' ').replace('\n', ' '))
+        """
 
     @staticmethod
     def GIFT_ID_EXCELLENT(x, connection):
@@ -706,6 +711,28 @@ class Transform(object):
                 npc_name = do_lookup('NPCRepository', npc_id, '<str>Id', 'Name', Lookup.TRANSLATION, connection, {})
             npcs.append(npc_name)
         return '\n'.join(npcs)
+
+    @staticmethod
+    def ITEM_DROP_FIXED(x, connection):
+        reward_id = x.split(',')[-1]
+        return do_lookup('Item_drop', reward_id, '<str>id', 'FixDrop_ItemList',
+                         lambda x, connection: '\n'.join([do_lookup('Props_total_table', y.split(',')[0], '<str>Props_Id', 'Props_Name', Lookup.TRANSLATION, connection, {}) for y in x.split(';')]), connection, {})
+
+    @staticmethod
+    def ITEM_DROP_RANDOM(x, connection):
+        reward_id = x.split(',')[-1]
+        return do_lookup('Item_drop', reward_id, '<str>id', 'RndDrop_ItemList',
+                         lambda x, connection: '\n'.join([do_lookup('Props_total_table', y.split(',')[0], '<str>Props_Id', 'Props_Name', Lookup.TRANSLATION, connection, {}) for y in x.split(';')]) if x.split(';')[0].split(',')[0] != '0' else 'None', connection, {})
+
+    @staticmethod
+    def ITEM_DROP_RANDOM_NUMBER(x, connection):
+        reward_id = x.split(',')[-1]
+        return do_lookup('Item_drop', reward_id, '<str>id', 'RndDrop_NumRange', None, connection, {})
+
+    @staticmethod
+    def ITEM_DROP_FIXED_NUMBER(x, connection):
+        reward_id = x.split(',')[-1]
+        return do_lookup('Item_drop', reward_id, '<str>id', 'FixDrop_MaxNum', None, connection, {})
 
 
 def dict_factory(cursor, row):
