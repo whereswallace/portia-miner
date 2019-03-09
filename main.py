@@ -394,7 +394,7 @@ class Lookup(object):
     PLAYER_INTEND_HOME_REGION = ('<str>Type', 'Player_Intend', 'HomeRegion', None)
     IN_MISSION_DIALOG = ('<str>MissionID', 'InMission_Dialog', 'Dialog', CONVERSATION_BASE)  # split by semicolon
     TASK_DIALOGUE = ('<str>Dialogue', 'Task_dialogue', 'Id', CONVERSATION_BASE)
-    ORDER_REQ_ITEM = ('<str>OrderID', 'Order_Req', 'ItemReq', None)  # for now
+    ORDER_REQ_ITEM = ('<str>OrderID', 'Order_Req', 'ItemReq', PROP)  # for now
     ORDER_REQ_GOLD = ('<str>OrderID', 'Order_Req', 'Gold', None)
     ORDER_REQ_RELATIONSHIP = ('<str>OrderID', 'Order_Req', 'Relationship', None)
     ORDER_REQ_WORKSHOP_PT = ('<str>OrderID', 'Order_Req', 'WorkshopPT', None)
@@ -402,6 +402,9 @@ class Lookup(object):
     ORDER_REQ_LEVEL = ('<str>OrderID', 'Order_Req', 'Level', GUILD_LEVEL)
     ORDER_REQ_WEIGHT = ('<str>OrderID', 'Order_Req', 'Weight', None)
     ORDER_REQ_DEADLINE = ('<str>OrderID', 'Order_Req', 'Deadline', None)
+    ORDER_REQ_MISSION = ('<str>OrderID', 'Order_Req', 'MissionID', None)
+    ORDER_REQ_SEASON = ('<str>OrderID', 'Order_Req', 'Season', None)
+    ORDER_REQ_WEATHER = ('<str>OrderID', 'Order_Req', 'Weather', None)
     TRIAL_DUNGEON_MONSTER = ('<str>ID', 'Trial_Dungeon_Monster', 'ActorID', ACTOR_TYPE)
     REQ_TYPE = ('<str>TypeID', 'Req_Type', 'Order_Rewards', None)  # for now, need to split by ','
     # for now, need to split by ';' and quantity_post '_'
@@ -421,6 +424,8 @@ class Lookup(object):
     DEE_FLAG_NAME = ('<str>id', 'SceneItemTransformBinding', 'flagName', None)
     FOOD_TAG_MAXIMUM = ('<str>Food_GroupID', 'Food_Group', 'Food_Maximum', None)
     FOOD_TAG_MINIMUM = ('<str>Food_GroupID', 'Food_Group', 'Food_Minimum', None)
+    ORDER_REQ_GROUP_REQ = ('<str>id', 'Order_ReqGroup', 'req', lambda x, connection: '\n'.join([do_lookup(
+        'Order_Req', y.split(',')[0], '<str>OrderID', 'ItemReq', Lookup.PROP, connection, {}) for y in x.split(',')]))
 
 
 class Transform(object):
