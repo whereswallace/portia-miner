@@ -1,6 +1,5 @@
 {'name': 'Order_ReqGroup',
  'columns': [('id', None, {'label': '**ID (Requester?)**'}),
-             ('Req_Des_NpcDial', Lookup.ORDER_DELIVER_ORG_NAME, {'quantity_post': '|'})
              ('type', None, {'label': '**Type**'}),
              ('req', Lookup.ORDER_REQ_ITEM, {'split': ',',
                                              'quantity_post': '_',
