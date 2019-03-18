@@ -451,6 +451,13 @@ class Transform(object):
         return {'0': 'False', '1': 'True'}[x]
 
     @staticmethod
+    def INT(x, connection):
+        try:
+            return int(float(x))
+        except ValueError:
+            return None
+
+    @staticmethod
     def EMPTY(x, connection):
         return {'-1': 'n/a'}[x]
 
@@ -803,7 +810,21 @@ def do_lookup(lookup_table, source_value, lookup_column, result_column, result_c
     return options.get('multiple_lookup_results_join_char', ', ').join(final_values)
 
 
-def extract_table(name, columns, connection):
+def extract_table(name, columns, connection, sort = None):
+    if sort is None:
+        sort_func = lambda x: x[0][1].lower()
+    else:
+        try:
+            sort_col = [col[0] for col in columns].index(sort[0])
+        except ValueError:
+            raise Exception('Invalid sort column: {}'.format(sort[0]))
+        if sort[1] is None:
+            sort_func = lambda x: x[sort_col][1].lower()
+        elif callable(sort[1]):
+            sort_func = lambda x: sort[1](x[sort_col][1], connection)
+        else:
+            raise Exception('Unexpected sort column conversion type {}'.format(sort[1]))
+
     extracted = []
     results = do_query('SELECT {} FROM {}'.format(','.join([x[0] for x in columns]), name), connection)
     for result in results:
@@ -854,7 +875,7 @@ def extract_table(name, columns, connection):
             join_string = options.get('join', '\n')
             single_extracted.append((field_label, join_string.join(col_values)))
         extracted.append(single_extracted)
-    extracted.sort(key=lambda x: x[0][1].lower())
+    extracted.sort(key=sort_func)
     return extracted
 
 
@@ -881,7 +902,10 @@ def main(mappings):
                                         lookup[1], key, lookup[0], lookup[2], lookup[3], connection, {}), value))
                             extracted = new_extracted
                     elif 'columns' in mapping:
-                        extracted = extract_table(mapping['name'], mapping['columns'], connection)
+                        if 'sort' in mapping:
+                            extracted = extract_table(mapping['name'], mapping['columns'], connection, mapping['sort'])
+                        else:
+                            extracted = extract_table(mapping['name'], mapping['columns'], connection)
                     print(mapping['name'])
                     print('\n')
                     for single in extracted:
