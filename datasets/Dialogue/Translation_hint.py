@@ -1,3 +1,4 @@
 {'name': 'Translation_hint',
  'columns': [('ID', None),
-             ('English', None, {'label': 'Dialogue in English (other languages available upon request)'})]}
+             ('English', None, {'label': 'Dialogue in English'}),
+             ('Russian', None, {'label': 'Dialogue in Russian'})]}
