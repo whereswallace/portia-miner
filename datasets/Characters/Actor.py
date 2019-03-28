@@ -5,4 +5,7 @@
              ('IsBoss', Transform.BOOL, {'label': 'Is a boss?'}),
              ('EyeDistance', None, {'label': '**Eye_Distance**'}),
              ('ClearHatredDistance', None, {'label': '**Clear_Hatred_Distance**'}),
-             ('Drop_Group', None, {'label': '**Drop_Group**'})]}
+             ('Drop_Group', Lookup.ITEM_DROP_FIXED, {'label': 'Fixed dropped items'}),
+             ('Drop_Group', Lookup.ITEM_DROP_FIXED_NUMBER, {'label': 'Number of fixed drops'}),
+             ('Drop_Group', Lookup.ITEM_DROP_RANDOM, {'label': 'Random dropped items'}),
+             ('Drop_Group', Lookup.ITEM_DROP_RANDOM_NUMBER, {'label': 'Number of random drops'})]}
